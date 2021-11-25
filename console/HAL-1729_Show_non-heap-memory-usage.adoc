@@ -33,9 +33,9 @@ This issue is about adding the attribute `non-heap-memory-usage` to the server s
 * mailto:msvehla@redhat.com[Martin Svehla]
 
 === Testing By
-    
+
 [x] Engineering
-    
+
 [ ] QE
 
 === Affected Projects or Components
@@ -45,18 +45,21 @@ This issue is about adding the attribute `non-heap-memory-usage` to the server s
 
 == Requirements
 
-The server status preview of the console must contain an additional section about the non-heap memmory usage. 
+The server status preview of the console must contain an additional section about the non-heap memmory usage.
 
 This new section must contains two values:
 
 1. used non-heap memory
 2. commited non-heap memory
 
-The unit for both values is MB. 
+The unit for both values is MB.
+
+Affected UI:: Runtime / Server / Status
+Affected Resources:: `/core-service=platform-mbean/type=memory`
 
 == Test Plan
 
-Add a test to verify that both values are present in the server preview. 
+Add a test to verify that both values are present in the server preview.
 
 == Community Documentation
 
