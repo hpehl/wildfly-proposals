@@ -1,4 +1,11 @@
-= <INSERT TITLE HERE>
+---
+categories:
+# Add any category for this proposal as a yaml list, e.g.
+# - core
+# - management
+# if missing, add it to _data/widfly-categories and use its id
+---
+= [Experimental|Preview|Community|default]Template <INSERT TITLE HERE>
 :author:            Your Name
 :email:             your.email@redhat.com
 :toc:               left
@@ -17,6 +24,16 @@
 === Related Issues
 
 * https://issues.redhat.com/browse/WFLY[WFLY-XXXX]
+
+=== Stability Level
+// Choose the planned stability level for the proposed functionality
+* [ ] Experimental
+
+* [ ] Preview
+
+* [ ] Community
+
+* [ ] default
 
 === Dev Contacts
 
@@ -51,8 +68,18 @@
 === Hard Requirements
 
 === Nice-to-Have Requirements
+// Requirements in this section do not have to be met to merge the proposed functionality.
+// Note: Nice-to-have requirements that don't end up being implemented as part of
+// the work covered by this proposal should be moved to the 'Future Work' section.
+
 
 === Non-Requirements
+// Use this section to explicitly discuss things that readers might think are required
+// but which are not required.
+
+=== Future Work
+// Use this section to discuss requirements that are not addressed by this proposal
+// but which may be addressed in later proposals.
 
 == Backwards Compatibility
 
@@ -87,7 +114,7 @@ or a confirmation that there are no security implications to consider.
 
 == Community Documentation
 ////
-Generally a feature should have documentation as part of the PR to wildfly master, or as a follow up PR if the feature is in wildfly-core. In some cases though the documentation belongs more in a component, or does not need any documentation. Indicate which of these will happen.
+Generally a feature should have documentation as part of the PR to wildfly main, or as a follow up PR if the feature is in wildfly-core. In some cases though the documentation belongs more in a component, or does not need any documentation. Indicate which of these will happen.
 ////
 == Release Note Content
 ////
