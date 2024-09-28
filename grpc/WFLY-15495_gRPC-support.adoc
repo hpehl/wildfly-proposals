@@ -33,7 +33,7 @@ The gRPC subsystem defines a https://docs.wildfly.org/galleon/#_layers[Galleon l
 
 ==== Feature maturity
 
-The feature is intended to be introduced at the *Experimental* or *Preview* level.
+The feature is intended to be introduced at the *Preview* level.
 ////
 ==== Nice-to-Have requirements
 
@@ -91,22 +91,23 @@ Instead, this RFE is about to bring gRPC support to WildFly.
 
 * The gRPC subsystem opens and manages a port for processing gRPC invocations.
 * The gRPC subsystem detects and integrates gRPC server deployments.
+* Support for server side interceptors.
 * The gRPC subsystem provides a default configuration.
 * The Galleon layer must provide the gRPC subsystem dependencies.
 * The gRPC subsystem integrates with the Elytron subsystem to provide TLS, and TLS with mutual authentication
 * Management API needs maturity level metadata.
+* A gRPC chapter in the WildFly https://github.com/wildfly/wildfly/tree/main/docs/src/main/asciidoc/_developer-guide[developer guide]
 
 === Nice-to-Have Requirements
 
 * The gRPC subsystem integrates with the Elytron subsystem to provide identity authorization.
-* Support for server side interceptors and clients
+* Support for client side interceptors
 * gRPC services, clients and interceptors can be deployed independently of each other [???]
 * gRPC services, clients and interceptors can be configured independently of each other
 * WildFly quickstart for gRPC clients, services and interceptors
 * Support of https://github.com/grpc/grpc/blob/master/doc/health-checking.md[gRPC health check]
 * Support of https://github.com/grpc/grpc/blob/master/doc/server-reflection.md[gRPC relfection]
 * Support of https://smallrye.io/smallrye-mutiny/[Mutiny] API
-* A gRPC chapter in the WildFly https://github.com/wildfly/wildfly/tree/main/docs/src/main/asciidoc/_developer-guide[developer guide]
 
 === Non-Requirements
 
@@ -375,11 +376,13 @@ gRPC services, clients and interceptors are deployed to WildFly using Jakarta EE
 
 To implement a gRPC service, the class has to extend the generated gRPC implementation base and override the methods defined in the service interface.
 
-////
 ==== Server Interceptors
 
-A gRPC server interceptor has to implement `io.grpc.ServerInterceptor` and is applied to a gRPC service using an annotation or the deployment descriptor.
+A gRPC server interceptor has to implement `io.grpc.ServerInterceptor`. All server interceptors found in a gRPC
+WAR are applied to all services in that WAR. They are applied in order as determined by
+the `jakarta.annotation.Priority`.
 
+////
 ==== Clients
 
 gRPC clients can be created using channels. The channel can be injected referencing the name given in the deployment descriptor. Using the channel both a blocking/synchronous clients and non-blocking/asynchronous clients can be created.
@@ -396,7 +399,7 @@ A gRPC client interceptor has to implement `io.grpc.ClientInterceptor` and is ap
 
 === Integration tests
 
-* call and response
+* unary calls
  ** plaintext
  ** client authentication
  ** client and server authentication
@@ -406,6 +409,12 @@ A gRPC client interceptor has to implement `io.grpc.ClientInterceptor` and is ap
  ** client authentication
  ** client and server authentication
  
+* server interceptor tests
+ ** unary calls
+ ** streaming
+ ** segregation of interceptors by WARs
+ ** ordering by @Priority
+ 
 === Nice to have tests
 
 Integration tests that verify the setting of each of the parameters
@@ -413,4 +422,4 @@ Integration tests that verify the setting of each of the parameters
 
 == Community Documentation
 
-Detailed description in wildfly-grpc-feature-pack/docs/guide/index.adoc
+Detailed description in pull request https://github.com/wildfly/wildfly/pull/18256[WFLY-15495: Adding a chapter on the grpc subsystem]. 
